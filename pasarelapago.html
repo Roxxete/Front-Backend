@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasarela de Pago</title>
+    <link rel="stylesheet" href="pasareladepago.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <img src="logo.png" alt="Logo">
+    </header>
+
+    <!-- Formulario de pago -->
+    <main>
+        <section class="payment-section">
+            <form id="paymentForm" action="/procesar_pago" method="POST" onsubmit="return validarFormulario()">
+                <h2>Pasarela de Pago</h2>
+
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" required pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+                <span id="nombreError" class="error">Solo se permiten letras y espacios en el nombre.</span>
+
+                <label for="tarjeta">Número de Tarjeta:</label>
+                <input type="text" id="tarjeta" name="tarjeta" required maxlength="18" pattern="\d{13,18}" title="El número de tarjeta debe tener entre 13 y 18 dígitos">
+                <span id="tarjetaError" class="error">El número de tarjeta debe tener entre 13 y 18 dígitos.</span>
+
+                <label for="expiracion">Fecha de Expiración:</label>
+                <input type="month" id="expiracion" name="expiracion" required>
+
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" required maxlength="3" pattern="\d{3}">
+                <span id="cvvError" class="error">El CVV debe tener exactamente 3 dígitos.</span>
+
+                <button type="submit">Pagar</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 O3Sense</p>
+    </footer>
+
+    <script>
+        function validarFormulario() {
+            const nombreInput = document.getElementById("nombre");
+            const tarjetaInput = document.getElementById("tarjeta");
+            const cvvInput = document.getElementById("cvv");
+            const nombreError = document.getElementById("nombreError");
+            const tarjetaError = document.getElementById("tarjetaError");
+            const cvvError = document.getElementById("cvvError");
+            
+            let isValid = true;
+
+            // Validación del nombre
+            if (!/^[A-Za-z\s]+$/.test(nombreInput.value)) {
+                nombreError.style.display = "block";
+                isValid = false;
+            } else {
+                nombreError.style.display = "none";
+            }
+
+            // Validación del número de tarjeta (13 a 18 dígitos)
+            if (!/^\d{13,18}$/.test(tarjetaInput.value)) {
+                tarjetaError.style.display = "block";
+                isValid = false;
+            } else {
+                tarjetaError.style.display = "none";
+            }
+
+            // Validación del CVV
+            if (!/^\d{3}$/.test(cvvInput.value)) {
+                cvvError.style.display = "block";
+                isValid = false;
+            } else {
+                cvvError.style.display = "none";
+            }
+
+            return isValid; // Solo permite el envío si todo es válido
+        }
+    </script>
+
+</body>
+</html>
