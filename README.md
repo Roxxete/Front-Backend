@@ -1,2 +1,0 @@
-# Front-Backend
-Proyecto biometría
