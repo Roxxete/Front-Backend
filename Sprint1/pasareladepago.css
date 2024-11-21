@@ -32,7 +32,9 @@ footer {
 
 /* Contenedor de formulario */
 
-
+.payment-form{
+    
+}
 .payment-section {
     display: flex;
     flex-direction: column;
