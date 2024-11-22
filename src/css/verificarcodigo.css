@@ -1,0 +1,119 @@
+/* Estilo general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #cbe6f2;
+    display: flex;
+    flex-direction: column;  /* Esto permite que el contenido se distribuya en el eje vertical */
+}
+
+/* Header */
+header {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+header img {
+    height: 40px;
+}
+
+/* Contenedor principal de la verificación */
+.verification-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;  /* Permite que el contenedor principal se expanda y ocupe el espacio disponible */
+    padding: 20px;
+    text-align: center;
+}
+
+/* Contenedor de logo grande y texto */
+.logo-large-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo-large {
+    height: 80px; /* Tamaño más pequeño del logo en el centro */
+    margin-right: 10px; /* Espacio entre el logo y el texto */
+}
+
+/* Estilo para el título de la verificación */
+h2 {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Estilo para la etiqueta y los inputs */
+label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Estilo para el input */
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    max-width: 300px; /* Limita el ancho del input */
+}
+
+/* Estilo del botón */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    max-width: 300px; /* Limita el ancho del botón */
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Mensaje de error o éxito */
+#message {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Footer */
+footer {
+    background-color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative; /* Asegura que se mantenga dentro del flujo */
+    bottom: 0;
+    margin-top: auto; /* Esto asegura que el footer se quede en la parte inferior */
+}
+
+footer p {
+    margin: 0;
+    color: #333;
+}
