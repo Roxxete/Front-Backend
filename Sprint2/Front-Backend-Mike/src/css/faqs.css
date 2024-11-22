@@ -1,0 +1,107 @@
+/* Estilo general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #cbe6f2;
+}
+
+/* Header */
+header {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Permite que el footer quede abajo */
+}
+
+header img {
+    height: 40px;
+}
+
+footer {
+    background-color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative; /* Asegura que se mantenga dentro del flujo */
+    bottom: 0;
+}
+
+/* Contenedor de preguntas frecuentes */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.faq-container {
+    background-color: #e6e6e6;
+    max-width: 800px; /* Aumentado de 600px a 800px */
+    margin: 0 auto;   /* Centrar el contenedor horizontalmente */
+    padding: 20px;
+    border-radius: 10px;       /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Estilo para cada pregunta */
+.faq-item {
+    margin-bottom: 10px;
+}
+.faq-question {
+    position: relative; /* Necesario para posicionar la flecha */
+    width: 100%;
+    padding: 10px 40px 10px 10px; /* Añadido más espacio a la derecha para la flecha */
+    text-align: left;
+    background-color: #a5c7d9;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Flecha hacia abajo */
+.faq-question::after {
+    content: "▼"; /* Unicode de la flecha hacia abajo */
+    position: absolute;
+    right: 15px; /* Ajusta la posición horizontal */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #333; /* Color de la flecha */
+}
+
+.faq-question:hover {
+    background-color: #8aaec2;
+}
+
+.faq-answer {
+    display: none;
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}

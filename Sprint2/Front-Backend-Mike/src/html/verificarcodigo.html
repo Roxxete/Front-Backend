@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERIFICACIÓN</title>
+    <link rel="stylesheet" href="../css/verificarcodigo.css">
+</head>
+<body>
+    <!-- Header con logo pequeño centrado -->
+    <header> 
+        <img class="logo-small" src="../images/logo2.png" alt="Logo">
+    </header>
+
+    <!-- Contenedor de verificación -->
+    <div class="verification-container">
+        <!-- Logo grande junto al texto -->
+        <div class="logo-large-container">
+            <img class="logo-large" src="../images/logo2.png" alt="Logo">
+            <h2>Verificación de Código</h2>
+        </div>
+        
+        <!-- Input para el código -->
+        <label for="verification-code">Ingresa el código de verificación:</label>
+        <input type="number" id="verification-code" placeholder="Código de verificación" required>
+        
+        <!-- Botón para enviar -->
+        <button onclick="comprobarCodigo()">Verificar</button>
+
+        <p id="message"></p> <!-- Mensaje de éxito o error -->
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 O3Sense. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="../js/server2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

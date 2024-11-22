@@ -1,0 +1,163 @@
+/* Estilo general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #cbe6f2;
+}
+
+/* Header */
+header {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header img {
+    height: 40px;
+}
+
+/* Body */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Permite que el footer quede abajo */
+}
+
+/* Footer */
+footer {
+    background-color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor principal */
+.main-container {
+    flex: 1;
+    padding: 50px 20px;
+}
+
+/* Contenedor de texto centralizado */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Títulos principales */
+h2, h3 {
+    text-align: center;
+    color: #005f73;  /* Color principal (verde azulado) */
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+h3 {
+    font-size: 26px;
+}
+
+/* Sección sobre la empresa */
+.about-company {
+    margin-bottom: 10px;
+}
+
+.about-company p {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: justify;
+    color: #333;
+}
+
+/* Misión y visión */
+.container-mission {
+    display: flex;
+    justify-content: space-between; /* Alineación de los elementos a la izquierda y derecha */
+    gap: 30px; /* Espacio entre las secciones de misión y visión */
+    margin-bottom: 60px;
+    padding: 0 20px;  /* Asegura que haya padding en los laterales */
+}
+
+.mission, .vision {
+    width: 45%; /* Asegura que ambas secciones tengan un 45% del ancho disponible */
+    flex: 1;     /* Asegura que las secciones ocupen el mismo espacio */
+    padding: 20px; /* Espacio interno para la sección */
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+    margin: 0 auto;  /* Centra las secciones */
+    margin-bottom: 10px;
+
+}
+
+/* Contenedor de misión y visión */
+.container-mission {
+    max-width: 1200px;  /* Restringe el ancho máximo del contenedor */
+    margin: 0 auto;  /* Centra el contenedor de las secciones */
+}
+
+.mission h3, .vision h3 {
+    color: #005f73;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.mission p, .vision p {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Agregar mayor flexibilidad para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .mission, .vision {
+        width: 100%; /* En pantallas pequeñas, las dos secciones ocupan el 100% del ancho */
+        margin-bottom: 20px; /* Añadir espacio entre las secciones */
+    }
+}
+
+
+
+
+/* Estilo del equipo */
+.team {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.team h3 {
+    margin-bottom: 30px;
+}
+
+.team-member {
+    display: inline-block;
+    width: 30%;
+    margin: 10px;
+    text-align: center;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.team-member p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
