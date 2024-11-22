@@ -217,3 +217,44 @@ function actualizarUsuario() {
         }
     });
 }
+function actualizarContraseña() {
+    $(document).ready(async function () {
+    // Obtener los valores del formulario
+    const oldPassword = document.getElementById('old-password').value;
+    const newPassword = document.getElementById('new-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    // Validación de contraseñas
+    if (newPassword !== confirmPassword) {
+       alert("Las contraseñas no coinciden")
+        return;
+    }
+
+    // Obtener el ID del usuario (puedes pasarlo desde el servidor o guardarlo en un atributo oculto)
+    const usuarioId = await obtenerUserId(); // Cambia esto por el ID real del usuario
+    // Crear el objeto de datos para enviar en la solicitud
+    const formData = new FormData();
+    formData.append('old-contrasena', oldPassword);
+    formData.append('new-contrasena', newPassword);
+    formData.append('confirm-contrasena', confirmPassword);
+    formData.append('usuario_id', usuarioId);
+
+    // Realizar la solicitud Ajax
+    $.ajax({
+        url: '../api/actualizarContraseña.php', // Asegúrate de poner la URL correcta
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            const data = JSON.parse(response);
+            alert(data);  // Mostrar el mensaje que devuelve PHP
+            window.location.href = "../html/editarUsuario.html";
+            
+        },
+        error: function() {
+            alert('Hubo un error en la actualización de la contraseña');
+        }
+    });
+})
+}

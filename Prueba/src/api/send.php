@@ -45,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Cuerpo del correo
             $mail_template = "
-                <h2>¡Bienvenido!</h2>
-                <p>Por favor, usa el siguiente código para verificar tu cuenta:</p>
+                <h2>¡O3Sense te da la bienvenida!</h2>
+                <p>Usa el siguiente código para verificar tu cuenta y verificar la calidad del aire en un click:</p>
                 <h1>$codigo</h1>
                 <a href='http://localhost/prueba/src/html/verificarcodigo.html?codigo=$numeroCodificado&nombre=$nombre&apellidos=$apellidos&contrasena=$contrasena&email=$emailc&usuario=$usuario'>
                     Verificar mi correo

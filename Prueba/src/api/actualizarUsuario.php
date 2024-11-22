@@ -7,10 +7,9 @@
         $emailantiguo = $_POST['emailantiguo'];
         $nombre = $_POST['nombre'];
         $apellidos = $_POST['apellidos'];
-        $contrasena= password_hash($_POST['contrasena'], PASSWORD_BCRYPT);
         $usuario = $_POST['usuario'];
 
-        $query = "UPDATE usuarios SET nombre= '$nombre', apellidos = '$apellidos', contrasena = '$contrasena', usuario = '$usuario', email = '$email' WHERE email = '$emailantiguo'";
+        $query = "UPDATE usuarios SET nombre= '$nombre', apellidos = '$apellidos', usuario = '$usuario', email = '$email' WHERE email = '$emailantiguo'";
 
         $result = $mysql->query($query);
 
