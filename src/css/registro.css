@@ -1,0 +1,132 @@
+/* Estilo general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #cbe6f2;
+}
+
+/* Estructura principal */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header, footer {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+header img {
+    height: 40px;
+}
+
+footer {
+    text-align: center;
+    width: 100%;
+    background-color: white;
+    padding: 10px 0;
+    position: relative;
+}
+
+/* Contenedor de formulario centrado */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+/* Contenedor del formulario */
+.form-container {
+    background-color: #e6e6e6;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 450px;
+    text-align: left; /* Alinea el contenido del formulario a la izquierda */
+    position: relative;
+}
+
+/* Estilo del título */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Fila con dos columnas para Nombre y Apellidos */
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.row .column {
+    width: 48%; /* Cada columna ocupa el 48% del ancho */
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón de registro */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #a5c7d9; /* Color de fondo del botón */
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #8aaec2; /* Efecto hover */
+}
+
+/* Icono de usuario y contraseña */
+.icon {
+    position: absolute;
+    top: 180px; /* Ajustado para colocarlo a la altura del campo de usuario */
+    right: 40px;
+    color: #62b57a;
+}
+
+.icon-password {
+    position: absolute;
+    top: 265px; /* Ajustado para colocarlo a la altura del campo de contraseña */
+    right: 40px;
+    color: #888;
+    cursor: pointer;
+}
+
+/* Mensajes de error */
+.error {
+    color: red;
+    font-size: 12px;
+    text-align: right;
+    margin-top: -8px;
+    margin-bottom: 10px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+}
