@@ -217,7 +217,6 @@ function actualizarUsuario() {
         }
     });
 }
-<<<<<<< HEAD
 function actualizarContraseña() {
     $(document).ready(async function () {
     // Obtener los valores del formulario
@@ -259,5 +258,3 @@ function actualizarContraseña() {
     });
 })
 }
-=======
->>>>>>> origin/Alex

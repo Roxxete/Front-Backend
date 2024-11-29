@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas Frecuentes</title>
+    <link rel="stylesheet" href="../css/faqs.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img class="logo" src="../images/logo2.png" alt="Logo">
+    </header>
+
+    <!-- Contenedor principal -->
+    <div class="main-content">
+        <div class="faq-container">
+            <h2>Preguntas Frecuentes</h2>
+            
+            <!-- Pregunta 1 -->            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer1')">
+                    ¿Cómo funciona el sensor que ofrecen?
+                </button>
+                <div class="faq-answer" id="answer1">
+                    Nuestros sensores están diseñados para medir la concentración de monóxido de carbono (CO) en tiempo real. Cada sensor se conecta de manera inalámbrica a nuestra aplicación móvil mediante Bluetooth o un sistema de red, dependiendo del modelo. Una vez conectado, el sensor transmite los datos de CO a nuestra app, que los procesa y los muestra en un mapa interactivo. Esto permite a los usuarios visualizar los niveles de CO en las áreas monitoreadas y recibir alertas si los niveles superan los límites seguros.                </div>
+            </div>
+
+            <!-- Pregunta 2 -->
+              <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer2')">
+                    ¿Cómo funciona la visualización de datos en la app?                </button>
+                <div class="faq-answer" id="answer2">
+                    <ul>
+                        <p><strong>Interfaz intuitiva:</strong> La app muestra un mapa interactivo que indica las concentraciones de CO en tiempo real por zonas.</p>
+                        <p><strong>Filtros personalizables:</strong> Los usuarios pueden seleccionar fechas específicas para consultar datos históricos o configurar alertas según los niveles de CO.</p>
+                        <p><strong>Acceso gratuito:</strong> Los ciudadanos pueden usar la app sin coste alguno para conocer los niveles de contaminación en su entorno inmediato.</p>
+                        </ul>
+                </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer3')">
+                    ¿Por qué este sistema es mejor que una estación de monitoreo fija?
+                </button>
+                <div class="faq-answer" id="answer3">
+                    <ul>
+                        <p><strong>Cobertura dinámica:</strong> Las estaciones fijas están limitadas a una ubicación específica, mientras que los sensores móviles recopilan datos en múltiples zonas al desplazarse.</p>
+                        <p><strong>Coste más eficiente:</strong> Implementar sensores móviles requiere menos inversión que instalar múltiples estaciones fijas en toda la ciudad.</p>
+                        <p><strong>Datos en tiempo real:</strong> Este sistema proporciona información actualizada sobre las condiciones ambientales en cada zona, mejorando la capacidad de respuesta.</p>
+                    </ul>
+                </div>
+            </div>
+            
+            
+
+            <!-- Pregunta 4 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer4')">
+                    ¿Qué datos están disponibles en la aplicación gratuita?
+                </button>
+                <div class="faq-answer" id="answer4">
+                    <p><strong>Consulta de niveles de monóxido de carbono (CO):</strong> Los usuarios pueden visualizar los niveles de CO en tiempo real en las zonas cubiertas por nuestros sensores.</p>
+                    <p><strong>Mapa interactivo:</strong> Incluye una visualización con colores que representan diferentes niveles de contaminación (bajo, moderado, alto).</p>
+                    <p><strong>Alertas generales:</strong> Recibe notificaciones cuando los niveles de CO superen ciertos límites en áreas cercanas.</p>
+                    <p><strong>Funciones avanzadas:</strong> Para características como acceso a datos históricos, personalización de alertas o gestión de sensores, es necesario adquirir una suscripción premium.</p>
+                </div>
+            </div>
+            
+            
+
+            <!-- Pregunta 5 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer5')">
+                    ¿Quién puede beneficiarse de esta tecnología?
+                </button>
+                <div class="faq-answer" id="answer5">
+                    <p><strong>Ayuntamientos y organismos públicos:</strong> Pueden utilizar los sensores para implementar estrategias de control de contaminación y políticas ambientales más eficaces.</p>
+                    <p><strong>Empresas privadas:</strong> Empresas de transporte, logística y otros sectores pueden integrar los sensores para monitorear y reducir su impacto ambiental.</p>
+                    <p><strong>Ciudadanos:</strong> Cualquier persona puede descargar nuestra app y consultar los niveles de CO en su área de manera gratuita. Esto les ayuda a tomar decisiones informadas, como evitar zonas con alta contaminación o ajustar sus actividades al aire libre.</p>
+                </div>
+            </div>
+
+            <!-- Pregunta 6 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer6')">
+                    ¿Qué sucede si no hay sensores instalados en mi área?
+                </button>
+                <div class="faq-answer" id="answer6">
+                    <p><strong>Solicitud a tu ayuntamiento:</strong> Si no hay sensores en tu zona, puedes solicitar a tu ayuntamiento que se una a nuestro programa para instalar sensores en el área.</p>
+                    <p><strong>Opción de adquisición privada:</strong> También puedes optar por adquirir un sensor como particular y contribuir a la red de monitoreo ambiental, ayudando a expandir la cobertura.</p>
+                    <p><strong>Estudio de viabilidad:</strong> Nuestro equipo está disponible para estudiar la viabilidad de ampliar la cobertura en áreas específicas según la demanda de los usuarios.</p>
+                </div>
+            </div>
+            
+
+            <!-- Pregunta 7 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer8')">
+                    ¿Cómo se financia el acceso gratuito a los datos para los ciudadanos?     
+                </button>
+                <div class="faq-answer" id="answer8">
+                    <p><strong>Modelo de suscripción:</strong> El acceso gratuito es posible gracias a las suscripciones de ayuntamientos y organizaciones que utilizan nuestros servicios premium.</p>
+                    <p><strong>Financiamiento de la red de sensores:</strong> Estos ingresos nos permiten mantener y expandir la red de sensores, asegurando la cobertura en diversas áreas.</p>
+                    <p><strong>Impacto social positivo:</strong> Este modelo combina sostenibilidad financiera con un impacto social positivo al ofrecer datos actualizados de manera gratuita para la ciudadanía.</p>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 O3Sense. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="../js/faqs.js"></script>
+</body>
+</html>
