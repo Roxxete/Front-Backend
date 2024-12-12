@@ -317,6 +317,14 @@
             }).addTo(map); // Añadir la nueva capa
         }*/
 
+        const estacionesCoordenadas = {
+            "Pista Silla": [39.464889, -0.418656],
+            "Estación X": [39.469750, -0.376510],
+            "Estación Y": [39.484900, -0.347890],
+            // Agrega las estaciones y sus coordenadas aquí
+        };
+
+
         // Función para cargar los datos de los contaminantes y agregar los puntos al mapa
         function cargarDatosContaminante(idContaminante, gas, unidad) {
             const overlay = document.getElementById('data-overlay'); // Asegúrate de que el overlay está definido aquí
@@ -332,10 +340,10 @@
                 dataType: 'json',
                 success: function(response) {
                     console.log(response); // Inspecciona la respuesta en la consola
-                    if (response.error) {
-                        console.log('Error al obtener los datos:', response.error);
+                    if (!response || response.error) {
+                        console.error('Error al obtener los datos:', response.error);
                         return;
-                }
+                    }
 
                     // Procesar los datos para el mapa de calor
                     let heatData = response.map(function(item) {
@@ -356,6 +364,88 @@
             });
         }
 
+        // Función para cargar datos desde la API externa y agregar marcadores al mapa
+
+    function cargarDatosDesdeAPI() {
+        $.ajax({
+            url: 'https://valencia.opendatasoft.com/api/records/1.0/search/',
+            method: 'GET',
+            data: {
+                dataset: 'rvvcca',
+                rows: 100, // Asegúrate de incluir suficientes registros
+            },
+            dataType: 'json',
+            success: function (response) {
+                console.log(response); // Inspecciona la respuesta en la consola
+                if (!response.records || response.records.length === 0) {
+                    console.error('No se encontraron registros en el dataset.');
+                    return;
+                }
+
+                // Encontrar la fecha más reciente entre los registros
+                let fechaMasReciente = null;
+                response.records.forEach(record => {
+                    if (record.fields && record.fields.fecha) {
+                        const fecha = new Date(record.fields.fecha);
+                        if (!fechaMasReciente || fecha > new Date(fechaMasReciente)) {
+                            fechaMasReciente = record.fields.fecha;
+                        }
+                    }
+                });
+
+                if (!fechaMasReciente) {
+                    console.error('No se encontró una fecha válida en los registros.');
+                    return;
+                }
+
+                console.log(`Fecha más reciente: ${fechaMasReciente}`);
+
+                // Filtrar los registros por la fecha más reciente
+                const registrosRecientes = response.records.filter(record => {
+                    return record.fields && record.fields.fecha === fechaMasReciente;
+                });
+
+                console.log('Registros de la fecha más reciente:', registrosRecientes);
+
+                // Iterar sobre los registros recientes y mostrar valores de o3, so2, y co
+                registrosRecientes.forEach(record => {
+                    if (record.fields && record.fields.estacion) {
+                        const estacion = record.fields.estacion; // Campo que contiene el nombre de la estación
+                        const coordenadas = estacionesCoordenadas[estacion]; // Busca las coordenadas en el mapeo
+
+                        if (coordenadas) {
+                            const o3 = record.fields.o3 || 'Sin dato';
+                            const so2 = record.fields.so2 || 'Sin dato';
+                            const co = record.fields.co || 'Sin dato';
+                            const fecha = record.fields.fecha || 'Sin fecha';
+
+                            // Agregar un marcador al mapa
+                            L.marker(coordenadas)
+                                .addTo(map)
+                                .bindPopup(
+                                    `<b>Estación:</b> ${estacion}<br>
+                                     <b>O3:</b> ${o3} µg/m³<br>
+                                     <b>SO2:</b> ${so2} µg/m³<br>
+                                     <b>CO:</b> ${co} mg/m³<br>
+                                     <b>Fecha:</b> ${fecha}`
+                                );
+                            console.log(`Marcador agregado para estación: ${estacion}`);
+                        } else {
+                            console.warn(`Coordenadas no encontradas para la estación: ${estacion}`);
+                        }
+                    } else {
+                        console.warn('Registro sin información de estación:', record);
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error al obtener datos de la API externa:', status, error);
+                console.error('Respuesta del servidor:', xhr.responseText);
+            }
+        });
+    }
+
+
         // Función para cambiar los datos del heatmap
         function selectGas(gas) {
             const overlay = document.getElementById('data-overlay');
@@ -364,25 +454,32 @@
                 return;
             }
 
-            overlay.querySelector('.gas').innerText = `Gas: ${gas}`;
-    
             let idContaminante;
             let unidad;
-    
+
             // Determinar el ID del contaminante y su unidad
-            if (gas === 'CO2') {
-                idContaminante = 1;
-                unidad = 'ppm';
-            } else if (gas === 'Ozono') {
-                idContaminante = 2;
-                unidad = 'ppb';
-            } else if (gas === 'SO2') {
-                idContaminante = 3;
-                unidad = 'µg/m³';
+            switch (gas) {
+                case 'CO2':
+                    idContaminante = 1;
+                    unidad = 'ppm';
+                    break;
+                case 'Ozono':
+                    idContaminante = 2;
+                    unidad = 'ppb';
+                    break;
+                case 'SO2':
+                    idContaminante = 3;
+                    unidad = 'µg/m³';
+                    break;
+                default:
+                    console.error('Gas no reconocido:', gas);
+                    return;
             }
+
             // Llamar a la función para cargar los datos del contaminante seleccionado
             cargarDatosContaminante(idContaminante, gas, unidad);
         }
+
         // Función para crear el mapa de calor
         function crearMapaCalor(heatData) {
             // Asegúrate de que `map` sea tu instancia del mapa de Leaflet
@@ -408,8 +505,7 @@
         // Llamar a `selectGas` con "Ozono" al cargar la página
         selectGas('Ozono');
 
-        // Llamar a la función para cargar los datos de un gas (por ejemplo, CO2 con idContaminante = 1)
-        cargarDatosContaminante(1);
+        cargarDatosDesdeAPI(); // Llamar después de inicializar el mapa
     
     </script>
     
