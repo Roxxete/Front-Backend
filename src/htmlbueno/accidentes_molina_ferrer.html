@@ -123,16 +123,16 @@
         }
 
         .circular-overlay span {
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .circular-overlay .temperature {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: bold;
         }
 
         .circular-overlay .gas {
-            font-size: 16px;
+            font-size: 12px;
             margin-top: 5px;
         }
 
@@ -188,10 +188,14 @@
         .legend .green {
             background-color: green;
         }
+        .legend .blue {
+            background-color: blue;
+        }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <header class="header">
@@ -247,7 +251,10 @@
             maxZoom: 18,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-    
+        
+        var heatLayer; // Variable global para almacenar la capa de mapa de calor
+
+        /*
         // Datos para CO2 (muchas marcas con valores exagerados)
         var heatDataCO2 = [
             [38.996160, -0.165172, 3.5], [38.996500, -0.164800, 4.2], [38.995800, -0.165500, 5.0],
@@ -273,9 +280,9 @@
             [38.996500, -0.167000, 7.8], [38.997300, -0.166300, 8.1], [38.994000, -0.165800, 7.4],
             [38.996900, -0.164900, 8.3], [38.995400, -0.168000, 7.9], [38.993700, -0.165600, 8.0],
             [38.995800, -0.167800, 7.6], [38.996200, -0.163800, 8.4], [38.993500, -0.166500, 8.7]
-        ];
+        ];*/
     
-        // Crear el heatmap inicialmente con datos de CO2
+        /*// Crear el heatmap inicialmente con datos de CO2
         var heatLayer = L.heatLayer(heatDataCO2, {
             radius: 50, // Mayor radio para zonas más amplias
             blur: 30,   // Mayor desenfoque
@@ -308,9 +315,103 @@
                 maxZoom: 17,
                 max: 8.0
             }).addTo(map); // Añadir la nueva capa
+        }*/
+
+        // Función para cargar los datos de los contaminantes y agregar los puntos al mapa
+        function cargarDatosContaminante(idContaminante, gas, unidad) {
+            const overlay = document.getElementById('data-overlay'); // Asegúrate de que el overlay está definido aquí
+            if (!overlay) {
+                console.error("El elemento con ID 'data-overlay' no existe en el HTML.");
+                return;
+            }
+            // Realizar la solicitud AJAX para obtener los datos de las mediciones
+            $.ajax({
+                url: '../api/datosMapa.php', // Ruta de la API
+                method: 'GET',
+                data: { idcontaminante: idContaminante },
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response); // Inspecciona la respuesta en la consola
+                    if (response.error) {
+                        console.log('Error al obtener los datos:', response.error);
+                        return;
+                }
+
+                    // Procesar los datos para el mapa de calor
+                    let heatData = response.map(function(item) {
+                        return [item.latitud, item.longitud, item.valor];
+                    });
+
+                    // Actualizar el mapa de calor con los nuevos datos
+                    actualizarMapaCalor(heatData);
+
+                    // Actualizar información del gas en el overlay
+                    overlay.querySelector('.temperature').innerText = `${heatData.length} mediciones`;
+                    overlay.querySelector('.gas').innerText = `${gas} (${unidad})`;
+                    overlay.querySelector('.temperature').innerText = `Unidad: ${unidad}`;
+                },
+                error: function(xhr, status, error) {
+                    console.log('Hubo un error en la solicitud AJAX.', status, error);
+                }
+            });
         }
-    </script>
+
+        // Función para cambiar los datos del heatmap
+        function selectGas(gas) {
+            const overlay = document.getElementById('data-overlay');
+            if (!overlay) {
+                console.error("El elemento con ID 'data-overlay' no existe en el HTML.");
+                return;
+            }
+
+            overlay.querySelector('.gas').innerText = `Gas: ${gas}`;
     
+            let idContaminante;
+            let unidad;
+    
+            // Determinar el ID del contaminante y su unidad
+            if (gas === 'CO2') {
+                idContaminante = 1;
+                unidad = 'ppm';
+            } else if (gas === 'Ozono') {
+                idContaminante = 2;
+                unidad = 'ppb';
+            } else if (gas === 'SO2') {
+                idContaminante = 3;
+                unidad = 'µg/m³';
+            }
+            // Llamar a la función para cargar los datos del contaminante seleccionado
+            cargarDatosContaminante(idContaminante, gas, unidad);
+        }
+        // Función para crear el mapa de calor
+        function crearMapaCalor(heatData) {
+            // Asegúrate de que `map` sea tu instancia del mapa de Leaflet
+            L.heatLayer(heatData, {
+                radius: 25,  // Radio de los puntos de calor (puedes ajustarlo)
+                blur: 15,    // Desenfoque del mapa de calor (puedes ajustarlo)
+                maxZoom: 17, // Nivel máximo de zoom
+                max: 8.0
+            }).addTo(map);
+        }
+        function actualizarMapaCalor(heatData) {
+            if (heatLayer) {
+                map.removeLayer(heatLayer); // Eliminar la capa actual
+            }
+            heatLayer = L.heatLayer(heatData, {
+                radius: 50,
+                blur: 30,
+                maxZoom: 17,
+                max: 8.0
+            }).addTo(map); // Añadir la nueva capa
+        }
+
+        // Llamar a `selectGas` con "Ozono" al cargar la página
+        selectGas('Ozono');
+
+        // Llamar a la función para cargar los datos de un gas (por ejemplo, CO2 con idContaminante = 1)
+        cargarDatosContaminante(1);
+    
+    </script>
     
 </body>
 </html>
