@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mapa de Calor - Contaminantes en El Grau de Gandía</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex; /* Activar flexbox en el cuerpo */
+            flex-direction: column; /* Dirección en columna */
+            font-family: Roobert, sans-serif;
+        }
+
+        .header {
+            background-color: #3B6A83;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            width: 75px;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 35px;
+            font-weight: normal;
+        }
+
+        #mapa {
+            font-weight: bold;
+        }
+
+        .main {
+            flex: 1; /* Ocupa el espacio disponible para empujar el footer hacia abajo */
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        h1::before,
+        h1::after {
+            content: "";
+            display: inline-block;
+            width: 50px;
+            height: 2px;
+            background-color: #3B6A83;
+            margin: 0 10px;
+        }
+
+        #container {
+            display: flex;
+            flex: 1; /* Asegurar que el contenedor principal también expanda */
+            height: auto;
+        }
+
+        #sidebar {
+            width: 15%;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #sidebar h2 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar ul li {
+            margin: 10px 0;
+        }
+
+        #sidebar ul li button {
+            width: 100%;
+            padding: 5px;
+            background-color: #3B6A83;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #map {
+            flex: 1;
+            position: relative;
+        }
+
+        .circular-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000; /* Añadir un z-index alto */
+        }
+
+        .circular-overlay span {
+            font-size: 14px;
+        }
+
+        .circular-overlay .temperature {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .circular-overlay .gas {
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .footer {
+            background-color: #3B6A83;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        .social-icons {
+            margin-top: 15px; /* Separación extra del texto superior */
+        }
+
+        .social-icons img {
+            width: 32px;
+            margin: 5px;
+        }
+
+        .footer p {
+            margin-top: 10px;
+            font-size: 0.8rem;
+        }
+
+        .legend {
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .legend span {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            border: 1px solid black;
+        }
+
+        .legend .red {
+            background-color: red;
+        }
+
+        .legend .yellow {
+            background-color: yellow;
+        }
+
+        .legend .green {
+            background-color: green;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat/dist/leaflet-heat.js"></script>
+</head>
+<body>
+    <header class="header">
+        <img src="../images/logo2.png" alt="Logo" class="logo">
+        <nav class="nav">
+            <a href="#" id="mapa">MAPA</a>
+            <a href="#">MI PERFIL</a>
+            <a href="#">CERRAR SESIÓN</a>
+        </nav>
+    </header>
+    <div id="container">
+        <div id="sidebar">
+            <h2>Gases contaminantes</h2>
+            <ul>
+                <li><button onclick="selectGas('CO2')">CO<sub>2</sub></button></li>
+                <li><button onclick="selectGas('Ozono')">Ozono</button></li>
+                <li><button onclick="selectGas('SO2')">SO<sub>2</sub></button></li>
+            </ul>
+            <div class="legend">
+                <div><span class="red"></span>Rojo: Peligro</div>
+                <div><span class="yellow"></span>Amarillo: Regular</div>
+                <div><span class="green"></span>Verde: Correcto</div>
+                <div><span class="blue"></span>Azul: Perfecto</div>
+            </div>
+        </div>   
+        <div id="map"> 
+            <div class="circular-overlay" id="data-overlay">
+                <span class="temperature">18°C</span>
+                <span class="gas">1.1 ppm</span>
+            </div>
+        </div>
+       
+    </div>
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">Política de privacidad</a>
+            <a href="#">Soporte</a>
+            <a href="#">Términos y condiciones</a>
+            <a href="#">Sobre nosotros</a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><img src="../images/twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="../images/insta.png" alt="Instagram"></a>
+            <a href="#"><img src="../images/correo.png" alt="Email"></a>
+        </div>
+        <p>&copy; Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        var map = L.map('map').setView([38.996160, -0.165172], 15);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    
+        // Datos para CO2 (muchas marcas con valores exagerados)
+        var heatDataCO2 = [
+            [38.996160, -0.165172, 3.5], [38.996500, -0.164800, 4.2], [38.995800, -0.165500, 5.0],
+            [38.997000, -0.166800, 6.0], [38.994800, -0.167200, 5.5], [38.996900, -0.164300, 4.8],
+            [38.997500, -0.168000, 5.2], [38.996600, -0.166500, 5.1], [38.995200, -0.163800, 3.9],
+            [38.994300, -0.165200, 4.4], [38.995700, -0.167800, 5.3], [38.993500, -0.166500, 6.0],
+            [38.996800, -0.164000, 5.7], [38.994100, -0.168500, 4.6], [38.995600, -0.165000, 5.9]
+        ];
+    
+        // Datos para Ozono
+        var heatDataOzono = [
+            [38.997500, -0.168000, 2.0], [38.996600, -0.163500, 2.5], [38.995800, -0.162800, 3.0],
+            [38.994700, -0.166000, 2.8], [38.993900, -0.165300, 3.1], [38.995000, -0.167500, 2.9],
+            [38.996400, -0.165700, 2.7], [38.995200, -0.166200, 2.4], [38.997200, -0.164000, 2.6],
+            [38.993800, -0.166800, 3.0], [38.996000, -0.167800, 2.3], [38.994900, -0.168200, 2.9],
+            [38.993300, -0.164300, 2.7], [38.994500, -0.165600, 2.8], [38.995900, -0.168500, 3.2]
+        ];
+    
+        // Datos para SO2
+        var heatDataSO2 = [
+            [38.995500, -0.167500, 7.5], [38.997200, -0.165700, 8.0], [38.996000, -0.163000, 6.8],
+            [38.994900, -0.164200, 7.2], [38.993800, -0.166800, 6.7], [38.995700, -0.163500, 8.5],
+            [38.996500, -0.167000, 7.8], [38.997300, -0.166300, 8.1], [38.994000, -0.165800, 7.4],
+            [38.996900, -0.164900, 8.3], [38.995400, -0.168000, 7.9], [38.993700, -0.165600, 8.0],
+            [38.995800, -0.167800, 7.6], [38.996200, -0.163800, 8.4], [38.993500, -0.166500, 8.7]
+        ];
+    
+        // Crear el heatmap inicialmente con datos de CO2
+        var heatLayer = L.heatLayer(heatDataCO2, {
+            radius: 50, // Mayor radio para zonas más amplias
+            blur: 30,   // Mayor desenfoque
+            maxZoom: 17,
+            max: 8.0    // Ajustar el máximo para reflejar los datos exagerados
+        }).addTo(map);
+    
+        // Función para cambiar los datos del heatmap
+        function selectGas(gas) {
+            const overlay = document.getElementById('data-overlay');
+            overlay.querySelector('.gas').innerText = `Gas: ${gas}`;
+    
+            let newHeatData;
+            if (gas === 'CO2') {
+                overlay.querySelector('.temperature').innerText = '400 ppm';
+                newHeatData = heatDataCO2;
+            } else if (gas === 'Ozono') {
+                overlay.querySelector('.temperature').innerText = '70 ppb';
+                newHeatData = heatDataOzono;
+            } else if (gas === 'SO2') {
+                overlay.querySelector('.temperature').innerText = '10 µg/m³';
+                newHeatData = heatDataSO2;
+            }
+    
+            // Actualizar el heatmap
+            map.removeLayer(heatLayer); // Eliminar la capa actual
+            heatLayer = L.heatLayer(newHeatData, {
+                radius: 50,
+                blur: 30,
+                maxZoom: 17,
+                max: 8.0
+            }).addTo(map); // Añadir la nueva capa
+        }
+    </script>
+    
+    
+</body>
+</html>
