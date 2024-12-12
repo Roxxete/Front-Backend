@@ -1,0 +1,100 @@
+/* Estilo general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #cbe6f2;
+}
+
+/* Header y Footer */
+header, footer {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+header img {
+    height: 40px;
+}
+
+footer {
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+}
+
+/* Contenedor de formulario */
+
+.payment-form{
+    
+}
+.payment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.payment-section h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.payment-section form {
+    background-color: #e6e6e6;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 450px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"], input[type="month"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón de registro */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #71AF71;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #8aaec2;
+}
+
+/* Estilo para el mensaje de error */
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none; /* Oculto por defecto */
+}

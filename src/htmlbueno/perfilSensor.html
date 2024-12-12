@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Sensor - Contaminantes en El Grau de Gandía</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            font-family: Roobert, sans-serif;
+            background-color: #ADD8E6;
+        }
+
+        .header {
+            background-color: #3B6A83;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 75px;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 35px;
+            font-weight: normal;
+        }
+
+        #container {
+            display: flex;
+            flex: 1;
+            margin-top: 80px; /* Espacio para evitar que el header tape */
+        }
+
+        #sidebar-left {
+            width: 150px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #sidebar-left img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        #sidebar-left h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        #sidebar-left .btn {
+            padding: 8px 15px;
+            background-color: #3B6A83;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        #sidebar-left .menu a {
+            display: block;
+            padding: 8px 0;
+            font-size: 1rem;
+            text-decoration: none;
+            color: #3B6A83;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #sidebar-left .menu a:hover {
+            background-color: #f0f0f0;
+        }
+
+        #sidebar-right {
+            flex: 2;
+            padding: 20px;
+            background-color: #E0F1FB;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: row; /* Para que el contenido esté en fila */
+            justify-content: space-between; /* Espacio entre los elementos */
+        }
+
+        #sidebar-right .sensor-info, #sidebar-right .vincula-sensor {
+            flex: 1; /* Ambos bloques toman el mismo tamaño */
+            margin-right: 20px; /* Espacio entre los bloques */
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        h1::before,
+        h1::after {
+            content: "";
+            display: inline-block;
+            width: 50px;
+            height: 2px;
+            background-color: #3B6A83;
+            margin: 0 10px;
+        }
+
+        .sensor-section {
+            margin-bottom: 20px;
+        }
+
+        .sensor-section label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        #sensor-label {
+            font-size: 1.5rem; /* Aumenta el tamaño del texto */
+            text-decoration: underline; /* Subraya el texto */
+        }
+
+        .sensor-section p {
+            margin-bottom: 10px;
+        }
+
+        .sensor-switch {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .sensor-switch label {
+            margin-right: 10px;
+        }
+
+        .sensor-switch input {
+            width: 40px;
+            height: 20px;
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: #ccc;
+            border-radius: 50px;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .sensor-switch input:checked {
+            background-color: #3B6A83;
+        }
+
+        .sensor-switch input:before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: white;
+            transition: left 0.3s ease;
+        }
+
+        .sensor-switch input:checked:before {
+            left: 22px;
+        }
+
+        .footer {
+            background-color: #3B6A83;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        .social-icons {
+            margin-top: 15px;
+        }
+
+        .social-icons img {
+            width: 32px;
+            margin: 5px;
+        }
+
+        .footer p {
+            margin-top: 10px;
+            font-size: 0.8rem;
+        }
+
+        /* Estilo para Vincula tu sensor */
+        #sidebar-right .vincula-sensor h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        #sidebar-right .vincula-sensor h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #3B6A83;
+        }
+
+        #sidebar-right .vincula-sensor img {
+            width: 200px; /* Ajusta el tamaño de la imagen QR */
+            height: auto;
+            display: block;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="../images/logo2.png" alt="Logo" class="logo">
+        <nav class="nav">
+            <a href="#">MAPA</a>
+            <a href="#">MI PERFIL</a>
+            <a href="#">CERRAR SESIÓN</a>
+        </nav>
+    </header>
+    <div id="container">
+        <div id="sidebar-left">
+            <!-- Foto de perfil -->
+            <img src="../images/profpic.jpg" alt="Foto de perfil">
+            <h2>Policía763</h2>
+            <button class="btn">Cambiar foto</button>
+            <!-- Menú lateral -->
+            <div class="menu">
+                <a href="#">Mi perfil</a>
+                <a href="#">Mi sensor</a>
+                <a href="#">Configuración</a>
+            </div>
+        </div>
+        <div id="sidebar-right">
+            <div class="sensor-info">
+                <h1>Mi sensor</h1>
+
+                <!-- Batería del sensor -->
+                <div class="sensor-section">
+                    <p>Batería de sensor: <strong>98%</strong></p>
+                </div>
+
+                <!-- Apagar/Encender el sensor -->
+                <div class="sensor-section">
+                    <label id="sensor-label" for="sensor">Apagar/encender sensor</label>
+                    <div class="sensor-switch">
+                        <label for="sensor">Sensor encendido</label>
+                        <input type="checkbox" id="sensor" checked onchange="updateSensorStatus()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vincula tu sensor -->
+            <div class="vincula-sensor">
+                <h2>Vincula tu sensor</h2>
+                <h3>Código QR</h3>
+                <img src="../images/QR.jpeg" alt="Código QR">
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">Política de privacidad</a>
+            <a href="#">Soporte</a>
+            <a href="#">Términos y condiciones</a>
+            <a href="#">Sobre nosotros</a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><img src="../images/twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="../images/insta.png" alt="Instagram"></a>
+            <a href="#"><img src="../images/correo.png" alt="Email"></a>
+        </div>
+        <p>&copy; Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // Función para cambiar el estado del sensor
+        function updateSensorStatus() {
+            const sensorCheckbox = document.getElementById('sensor');
+            const sensorLabel = document.querySelector('.sensor-switch label');
+
+            if (sensorCheckbox.checked) {
+                sensorLabel.textContent = 'Sensor encendido';
+            } else {
+                sensorLabel.textContent = 'Sensor apagado';
+            }
+        }
+    </script>
+</body>
+</html>

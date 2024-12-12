@@ -1,0 +1,70 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Fondo de la página */
+body {
+    background-color: #E2EFF7;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/* Logo */
+.logo {
+    display: block;
+    margin: 20px auto; /* Centra la imagen horizontalmente y le da un margen superior */
+    width: 150px; /* Ajusta el tamaño de la imagen según lo desees */
+    height: auto; /* Mantiene la relación de aspecto de la imagen */
+}
+
+/* Título principal */
+h1 {
+    color: #333;
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+/* Estilos de los botones */
+a {
+    display: inline-block;
+    margin: 15px;
+    padding: 12px 30px;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 8px;
+    color: white;
+    background-color: #5A9FD6; /* Color azul */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Efecto hover para los botones */
+a:hover {
+    background-color: #3b7bbf; /* Azul más oscuro */
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    background-color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+footer p {
+    font-size: 14px;
+    color: #333;
+}

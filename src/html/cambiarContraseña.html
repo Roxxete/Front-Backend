@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Contraseña</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+    <header>
+        <img class ="logo" src="../images/logo2.png" alt="Logo">
+        <nav>
+            <ul>
+                <li><a href="perfil.html" class="active">Perfil</a></li>
+                <li><a href="../api/logout.php">Cerrar sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="content">
+            <div class="profile-section">
+                <form>
+                    <h2>Perfil</h2>
+
+                    <label for="old-password">Contraseña Actual</label>
+                    <input type="password" id="old-password" name="old-password">
+                    
+                    <label for="new-password">Nueva Contraseña</label>
+                    <input type="password" id="new-password" name="new-password">
+
+                    <label for="confirm-password">Confirmar contraseña</label>
+                    <input type="password" id="confirm-password" name="confirm-password">
+
+                    <p class="error-msg">La contraseña no coincide</p>
+
+                    <button type="button" class="btn-save" onclick="actualizarContraseña()">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+            
+    <footer>
+        <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados.</p>
+    </footer>
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/server2.js"></script>
+                
+</body>
+</html>
